@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SignalChannelCharacterization</string>
+    <string name="title_activity_test">testActivity</string>
+
+    <string name="LTETitle"> LTE </string>
+    <string name="PCI"> PCI:   </string>>
+    <string name="ASU"> ASU:   </string>>
+    <string name="DBM"> DBM:   </string>>
+    <string name="TAD"> TAd:   </string>>
+
 </resources>
