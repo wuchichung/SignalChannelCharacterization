@@ -2,10 +2,13 @@
     <string name="app_name">SignalChannelCharacterization</string>
     <string name="title_activity_test">testActivity</string>
 
-    <string name="LTETitle"> LTE </string>
-    <string name="PCI"> PCI:   </string>>
-    <string name="ASU"> ASU:   </string>>
-    <string name="DBM"> DBM:   </string>>
-    <string name="TAD"> TAd:   </string>>
+    <string name="LTETitle"> LTE    </string>
+    <string name="PCI"> PCI:        </string>
+    <string name="ASU"> ASU:        </string>
+    <string name="DBM"> DBM:        </string>
+    <string name="TAD"> TAd:        </string>
+
+    <string name="google_app_id">AIzaSyAjzF9AjA_uHO_i12cMNBMjf1Lb1Y3WmTU</string>
+
 
 </resources>

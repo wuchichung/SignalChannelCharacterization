@@ -4,9 +4,10 @@
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:allowBackup="true"
@@ -15,12 +16,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyAjzF9AjA_uHO_i12cMNBMjf1Lb1Y3WmTU"/>
+
         <activity
             android:name=".WiFiListActivity">
         </activity>
 
         <activity
             android:name=".LTEListActivity">
+        </activity>
+
+        <activity
+            android:name=".LocationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

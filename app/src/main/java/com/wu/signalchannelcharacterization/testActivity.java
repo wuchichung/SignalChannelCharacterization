@@ -25,42 +25,8 @@ import java.util.List;
 
 public class testActivity extends AppCompatActivity {
 
-    private static final String TAG = "WuDebug";
-
-    TelephonyManager telephonyManager;
-    List<CellInfo> cellInfos;
-
-    TextView tv;
-    TextView tv2;
-    TextView tv3;
-
-    @Override protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Log.d(TAG, "cellInfos is Init");
-
-        tv = (TextView) findViewById(R.id.BSSID);
-        tv2 = (TextView) findViewById(R.id.SSID);
-        tv3 = (TextView) findViewById(R.id.Level);
-
-        telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        cellInfos = telephonyManager.getAllCellInfo();
-
-        LTEList lteList = LTEList.get(this);
-        List<LTE> ltes = lteList.getLTEs();
-
-        tv.setText(String.valueOf(ltes.size()));
-//        tv.setText(String.valueOf((() cellInfo).getmPci()));
-//        tv2.setText(cellInfo1.getClass().toString());
-
-
-//        tv2.setText(String.valueOf(((CellInfoWcdma) cellInfo).getCellSignalStrength().getDbm()));
-//        tv3.setText(String.valueOf(((CellInfoWcdma) cellInfo).getCellSignalStrength().getAsuLevel()));
-        }
-
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 }
