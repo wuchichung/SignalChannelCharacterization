@@ -1,6 +1,7 @@
 package com.wu.signalchannelcharacterization;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -34,32 +35,65 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
 /**
  * Created by wu on 4/7/16.
  */
 public class LocationFragment extends SupportMapFragment {
     private static final String TAG = "LocationFragment";
+    private static final String ARG_PCI = "pci";
 
     private GoogleApiClient mClient;
     private GoogleMap mMap;
-    private Bitmap mMapImage;
     private Location mCurrentLocation;
+    private LTE mLte = null;
+
+    public static LocationFragment newInstance(int pci) {
+        Bundle args = new Bundle();
+        args.putInt(ARG_PCI,pci);
+
+        LocationFragment fragment = new LocationFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    private void getLTE(int pci) {
+
+        LTEList lteList = LTEList.get(getActivity());
+        List<LTE> ltes = lteList.getLTEs();
+
+        for(LTE lte : ltes )
+        {
+            if(lte.getmPci() == pci)
+            {
+               mLte = lte;
+            }
+        }
+    }
+
+    private CircleOptions decideCircleColor(LatLng locaiton)
+    {
+        CircleOptions co = new CircleOptions();
+        int dbm = mLte.getmDbm();
 
 
-    public static LocationFragment newInstance() {
-        return new LocationFragment();
+
+        return co;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        int pci = getArguments().getInt(ARG_PCI);
+        getLTE(pci);
+
         mClient = new GoogleApiClient.Builder(getActivity())
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(Bundle bundle) {
-                        Log.d(TAG, "GOOGLE API Connected");
                         findLocation();
                     }
 
@@ -104,8 +138,6 @@ public class LocationFragment extends SupportMapFragment {
                 (getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 &&  ActivityCompat.checkSelfPermission
                 (getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            Log.d(TAG,"ERROR: Fail to get permission");
             return;
         }else
         {
@@ -115,33 +147,34 @@ public class LocationFragment extends SupportMapFragment {
                         public void onLocationChanged(Location location) {
                             mCurrentLocation = location;
                             updateUI();
-                            Log.d(TAG,"Got a fix: " + mCurrentLocation);
                         }
                     });
         }
     }
 
     private void updateUI() {
-//        if (mMap == null || mMapImage == null) {
-//            Log.d(TAG,"mMap is null");
-//            return;
-//        }
+
         if (mMap == null) {
-            Log.d(TAG,"mMap is null");
+            Log.d(TAG,"Map is null");
             return;
         }
 
-        if(mCurrentLocation ==null) {
-            Log.d(TAG,"mCurrentLocation is null");
+        if(mCurrentLocation == null) {
+            Log.d(TAG,"CurrentLocation is null");
             return;
         }
 
-        Log.d(TAG,"Update UI");
+        if(mLte == null)
+        {
+            Log.d(TAG,"LTE is null");
+            return;
+        }
 
         LatLng myPoint = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+
         CircleOptions circleOptions = new CircleOptions()
                 .center(myPoint)
-                .radius(5)
+                .radius(1)
                 .fillColor(Color.BLUE);
 
         mMap.clear();
