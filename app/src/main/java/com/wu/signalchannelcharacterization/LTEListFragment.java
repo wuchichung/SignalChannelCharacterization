@@ -1,6 +1,7 @@
 package com.wu.signalchannelcharacterization;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -101,8 +102,10 @@ public class LTEListFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Toast.makeText(getActivity(),
-                    mLTE.getmPci() + " clicked!", Toast.LENGTH_SHORT)
+                    "Pci No." + mLTE.getmPci() + " is chosen !", Toast.LENGTH_SHORT)
                     .show();
+            Intent i = LocationActivity.newIntent(getActivity(),mLTE.getmPci());
+            startActivity(i);
         }
     }
 
@@ -110,7 +113,6 @@ public class LTEListFragment extends Fragment {
     private class Adapter extends RecyclerView.Adapter<Holder> {
 
         private List<LTE> mLTEs;
-
         public Adapter(List<LTE> LTEs) {
             mLTEs = LTEs;
         }
@@ -152,10 +154,6 @@ public class LTEListFragment extends Fragment {
             final TypedArray styledAttributes = context.obtainStyledAttributes(ATTRS);
             mDivider = styledAttributes.getDrawable(0);
             styledAttributes.recycle();
-        }
-
-        public DividerItemDecoration(Context context, int resId) {
-            mDivider = ContextCompat.getDrawable(context, resId);
         }
 
         @Override
